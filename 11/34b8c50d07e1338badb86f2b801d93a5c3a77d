@@ -1,0 +1,27 @@
+docs/skills.json
+  f40675c86f9644b6 6
+.github/ISSUE_TEMPLATE/bug_report.md
+  f40675c86f9644b6 3,13
+skills/ai-harness-setup/SKILL.md
+  f40675c86f9644b6 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "1134b8c50d07e1338badb86f2b801d93a5c3a77d",
+  "prompts": {
+    "f40675c86f9644b6": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_220a68593ffefU5xbRUeC3Lp0B",
+        "model": "github-copilot/gpt-5.4"
+      },
+      "human_author": "Chris Renus",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 4,
+      "accepted_lines": 4,
+      "overriden_lines": 0
+    }
+  }
+}
