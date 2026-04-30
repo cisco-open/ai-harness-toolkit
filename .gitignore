@@ -1,0 +1,18 @@
+# npx skills fetch cache
+.agents/
+
+# Plan file
+.plan.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Node
+node_modules/
