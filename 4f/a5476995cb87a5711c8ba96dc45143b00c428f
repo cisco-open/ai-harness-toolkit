@@ -1,0 +1,39 @@
+skills/ai-native-assessment/README.md
+  f40675c86f9644b6 5,24,45,89
+skills/ai-harness-setup/SKILL.md
+  f40675c86f9644b6 4
+skills/ai-harness-setup/references/ai-tooling.md
+  f40675c86f9644b6 51,63-64
+skills/ai-native-assessment/SKILL.md
+  f40675c86f9644b6 3,149,169,173,193,208,214-215,224,244
+skills/ai-harness-setup/README.md
+  f40675c86f9644b6 22,43
+README.md
+  f40675c86f9644b6 32,38,45,100
+CONTRIBUTING.md
+  f40675c86f9644b6 26,47
+skills/ai-harness-setup/references/stacks/python/stack.md
+  f40675c86f9644b6 44
+docs/skills.json
+  f40675c86f9644b6 6,18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "4fa5476995cb87a5711c8ba96dc45143b00c428f",
+  "prompts": {
+    "f40675c86f9644b6": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_220a68593ffefU5xbRUeC3Lp0B",
+        "model": "github-copilot/gpt-5.4"
+      },
+      "human_author": "Chris Renus",
+      "messages": [],
+      "total_additions": 43,
+      "total_deletions": 61,
+      "accepted_lines": 36,
+      "overriden_lines": 0
+    }
+  }
+}
