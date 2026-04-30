@@ -1,0 +1,47 @@
+skills/ai-harness-setup/README.md
+  f40675c86f9644b6 22,43
+skills/ai-harness-setup/references/ai-tooling.md
+  f40675c86f9644b6 12,29,51,63-64,79,81,88,92
+skills/ai-native-assessment/README.md
+  f40675c86f9644b6 22,43,111
+skills/ai-native-assessment/SKILL.md
+  f40675c86f9644b6 3,160
+skills/ai-harness-setup/references/stacks/javascript-typescript/framework-react.md
+  f40675c86f9644b6 61
+docs/skills.json
+  f40675c86f9644b6 18
+skills/ai-harness-setup/SKILL.md
+  f40675c86f9644b6 164,166
+SECURITY.md
+  f40675c86f9644b6 4,12-13,17
+skills/ai-harness-setup/references/stacks/python/stack.md
+  f40675c86f9644b6 44
+skills/ai-harness-setup/references/stacks/javascript-typescript/stack.md
+  f40675c86f9644b6 29
+README.md
+  f40675c86f9644b6 1,32,38,46
+CONTRIBUTING.md
+  f40675c86f9644b6 1,36
+skills/ai-harness-setup/references/stacks/javascript-typescript/framework-angular.md
+  f40675c86f9644b6 34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "ab3cea601f68705403564d27f92a325f99472498",
+  "prompts": {
+    "f40675c86f9644b6": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_220a68593ffefU5xbRUeC3Lp0B",
+        "model": "github-copilot/gpt-5.4"
+      },
+      "human_author": "Chris Renus",
+      "messages": [],
+      "total_additions": 46,
+      "total_deletions": 133,
+      "accepted_lines": 33,
+      "overriden_lines": 0
+    }
+  }
+}
