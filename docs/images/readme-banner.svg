@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 460" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="460" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#09111F"/>
+      <stop offset="1" stop-color="#0F1E35"/>
+    </linearGradient>
+    <radialGradient id="leftGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(250 220) rotate(90) scale(180 250)">
+      <stop offset="0" stop-color="#FB7185" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#FB7185" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="rightGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(950 220) rotate(90) scale(180 250)">
+      <stop offset="0" stop-color="#22D3EE" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#22D3EE" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+      <path d="M 80 0 L 0 0 0 80" fill="none" stroke="#94A3B8" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="leftPanel" x1="48" y1="84" x2="548" y2="374" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2C1624"/>
+      <stop offset="1" stop-color="#1E1727"/>
+    </linearGradient>
+    <linearGradient id="rightPanel" x1="652" y1="84" x2="1152" y2="374" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#11282F"/>
+      <stop offset="1" stop-color="#133620"/>
+    </linearGradient>
+    <linearGradient id="harnessBox" x1="560" y1="126" x2="640" y2="332" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#192B4F"/>
+      <stop offset="1" stop-color="#173D60"/>
+    </linearGradient>
+    <linearGradient id="harnessStroke" x1="560" y1="229" x2="640" y2="229" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+    <linearGradient id="leftArrow" x1="520" y1="229" x2="560" y2="229" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FB7185"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+    <linearGradient id="rightArrow" x1="640" y1="229" x2="680" y2="229" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#4ADE80"/>
+    </linearGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="150%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="20" stdDeviation="18" flood-color="#020817" flood-opacity="0.42"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="460" fill="url(#bg)"/>
+  <rect width="1200" height="460" fill="url(#grid)"/>
+  <ellipse cx="250" cy="229" rx="250" ry="180" fill="url(#leftGlow)"/>
+  <ellipse cx="950" cy="229" rx="250" ry="180" fill="url(#rightGlow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="48" y="72" width="472" height="286" rx="30" fill="url(#leftPanel)" stroke="#7F1D43" stroke-width="1.5"/>
+    <rect x="544" y="88" width="112" height="220" rx="30" fill="url(#harnessBox)" stroke="url(#harnessStroke)" stroke-width="2.5"/>
+    <rect x="680" y="72" width="472" height="286" rx="30" fill="url(#rightPanel)" stroke="#166A5A" stroke-width="1.5"/>
+  </g>
+
+  <g>
+    <rect x="76" y="94" width="96" height="26" rx="13" fill="#4C2032" stroke="#9F1239" stroke-width="1.1"/>
+    <text x="124" y="111" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" fill="#FDA4AF" letter-spacing="1.4">BEFORE</text>
+    <text x="76" y="162" font-family="system-ui, -apple-system, sans-serif" font-size="33" font-weight="800" fill="#F8FAFC">Vibe coding</text>
+    <text x="76" y="186" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" fill="#F9A8D4">Prompt, React, Repeat.</text>
+
+    <rect x="76" y="198" width="416" height="40" rx="14" fill="#2A1723" stroke="#9F1239" stroke-width="1.2"/>
+    <text x="96" y="222" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" fill="#FFE4E6">&quot;Fix the issues.&quot;</text>
+
+    <rect x="76" y="250" width="416" height="40" rx="14" fill="#291D18" stroke="#C2410C" stroke-width="1.2"/>
+    <text x="96" y="274" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" fill="#FFEDD5">&quot;That is not what I wanted. Do this instead.&quot;</text>
+
+    <rect x="76" y="302" width="416" height="40" rx="14" fill="#26181C" stroke="#7F1D1D" stroke-width="1.2"/>
+    <text x="96" y="326" font-family="system-ui, -apple-system, sans-serif" font-size="12.5" fill="#FEE2E2">&quot;Try again, but cleaner.&quot;</text>
+  </g>
+
+  <g>
+    <line x1="520" y1="197" x2="532" y2="197" stroke="url(#leftArrow)" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 6"/>
+    <polygon points="532,190 544,197 532,204" fill="#8B5CF6"/>
+
+    <text x="600" y="126" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" fill="#C4B5FD" letter-spacing="1.6">HARNESS</text>
+    <text x="600" y="158" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="800" fill="#F8FAFC">Toolkit</text>
+
+    <rect x="570" y="184" width="60" height="24" rx="12" fill="#1A2540" stroke="#8B5CF6" stroke-width="1.1"/>
+    <text x="600" y="200" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#DDD6FE">checks</text>
+
+    <rect x="570" y="218" width="60" height="24" rx="12" fill="#172B42" stroke="#0EA5E9" stroke-width="1.1"/>
+    <text x="600" y="234" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#DBEAFE">specs</text>
+
+    <rect x="570" y="252" width="60" height="24" rx="12" fill="#15343F" stroke="#22D3EE" stroke-width="1.1"/>
+    <text x="600" y="268" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10.5" fill="#CFFAFE">skills</text>
+
+    <line x1="656" y1="197" x2="668" y2="197" stroke="url(#rightArrow)" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 6"/>
+    <polygon points="668,190 680,197 668,204" fill="#4ADE80"/>
+  </g>
+
+  <g>
+    <rect x="708" y="94" width="88" height="26" rx="13" fill="#17342F" stroke="#15803D" stroke-width="1.1"/>
+    <text x="752" y="111" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="800" fill="#86EFAC" letter-spacing="1.4">AFTER</text>
+    <text x="708" y="162" font-family="system-ui, -apple-system, sans-serif" font-size="33" font-weight="800" fill="#F8FAFC">With a harness</text>
+    <text x="708" y="186" font-family="system-ui, -apple-system, sans-serif" font-size="13.5" fill="#99F6E4">Structured Workflow. Reliable Output.</text>
+
+    <rect x="708" y="214" width="128" height="102" rx="18" fill="#132620" stroke="#15803D" stroke-width="1.2"/>
+    <text x="772" y="244" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#DCFCE7">Repo Context</text>
+    <text x="772" y="270" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" fill="#BBF7D0">
+      <tspan x="772" dy="0">Grounded in</tspan>
+      <tspan x="772" dy="14">Reality</tspan>
+    </text>
+
+    <rect x="852" y="214" width="128" height="102" rx="18" fill="#11292E" stroke="#0F766E" stroke-width="1.2"/>
+    <text x="916" y="244" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#CFFAFE">Deterministic</text>
+    <text x="916" y="260" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#CFFAFE">Checks</text>
+    <text x="916" y="286" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" fill="#A5F3FC">
+      <tspan x="916" dy="0">Repeatable</tspan>
+      <tspan x="916" dy="14">Validation</tspan>
+    </text>
+
+    <rect x="996" y="214" width="128" height="102" rx="18" fill="#12261D" stroke="#16A34A" stroke-width="1.2"/>
+    <text x="1060" y="244" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="700" fill="#DCFCE7">Skills + MCPs</text>
+    <text x="1060" y="270" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11.5" fill="#BBF7D0">
+      <tspan x="1060" dy="0">Codified Agent</tspan>
+      <tspan x="1060" dy="14">Workflow</tspan>
+    </text>
+  </g>
+
+  <text x="600" y="420" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-style="italic" fill="#94A3B8">Harnesses make AI output dependable.</text>
+</svg>
