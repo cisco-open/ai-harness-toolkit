@@ -1,0 +1,23 @@
+README.md
+  s_f1115bf3c6307d::t_ae0a9849a14658 9,18-30,32-43,45-49,51,53-55,57-83,136,138,140,142,144-147,149-154,156,169-171,194,199,206
+  s_f1115bf3c6307d::t_0ffb25593d032c 15-17
+  s_f1115bf3c6307d::t_28c258bbf67538 195-198
+  s_f1115bf3c6307d::t_79b09750ca748e 200-205
+  s_f1115bf3c6307d::t_39c46a4b714733 207
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.4",
+  "base_commit_sha": "573ece3186d31ab7e9103fe2476a2ad1c5069162",
+  "prompts": {},
+  "sessions": {
+    "s_f1115bf3c6307d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0e6600aaaffenb94ET53qM2qEi",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Chris Renus <crenus@cisco.com>"
+    }
+  }
+}
