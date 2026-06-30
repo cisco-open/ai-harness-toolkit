@@ -1,0 +1,35 @@
+packages/stack-frontend/apm.yml
+  s_f1115bf3c6307d::t_7b68199791d7de 4
+packages/stack-angular/apm.yml
+  s_f1115bf3c6307d::t_7b68199791d7de 4
+packages/stack-spring-boot/apm.yml
+  s_f1115bf3c6307d::t_7b68199791d7de 4
+skills/ai-harness-setup/SKILL.md
+  s_f1115bf3c6307d::t_7b68199791d7de 196
+packages/stack-javascript-typescript/apm.yml
+  s_f1115bf3c6307d::t_7b68199791d7de 4
+skills/ai-harness-setup/references/mcp-servers.md
+  s_f1115bf3c6307d::t_7b68199791d7de 43
+packages/stack-react/apm.yml
+  s_f1115bf3c6307d::t_7b68199791d7de 4
+packages/stack-python-uv/apm.yml
+  s_f1115bf3c6307d::t_7b68199791d7de 4
+packages/core/apm.yml
+  s_f1115bf3c6307d::t_7b68199791d7de 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.4",
+  "base_commit_sha": "f797112de090fec8983f9d97c6c5c6bb502c2873",
+  "prompts": {},
+  "sessions": {
+    "s_f1115bf3c6307d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0e6600aaaffenb94ET53qM2qEi",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Chris Renus <crenus@cisco.com>"
+    }
+  }
+}
