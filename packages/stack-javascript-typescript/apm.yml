@@ -1,7 +1,7 @@
 name: stack-javascript-typescript
 version: 1.0.4
 description: JavaScript and TypeScript base package for web composition.
-author: Cisco GenAI
+author: Cisco Open Source
 
 dependencies:
   apm:

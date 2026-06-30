@@ -1,7 +1,7 @@
 name: stack-angular
 version: 1.0.4
 description: Angular package with direct frontend guidance, JS/TS base, and Chrome DevTools MCP.
-author: Cisco GenAI
+author: Cisco Open Source
 
 dependencies:
   apm:

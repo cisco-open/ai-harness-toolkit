@@ -1,7 +1,7 @@
 name: stack-frontend
 version: 1.0.4
 description: Frontend web package with design guidance and Chrome DevTools MCP.
-author: Cisco GenAI
+author: Cisco Open Source
 
 dependencies:
   apm:

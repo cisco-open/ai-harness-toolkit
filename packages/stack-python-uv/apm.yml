@@ -1,7 +1,7 @@
 name: stack-python-uv
 version: 1.0.4
 description: Python and uv package with coding and security review skills.
-author: Cisco GenAI
+author: Cisco Open Source
 
 dependencies:
   apm:

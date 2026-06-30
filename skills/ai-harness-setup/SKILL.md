@@ -193,7 +193,7 @@ Add MCP servers to `apm.yml` based on the detected tech stack. MCP servers give 
 - Treat package-provided MCP servers as already handled by the corresponding package install:
   - `stack-frontend`, `stack-react`, and `stack-angular` provide Chrome DevTools.
 - Treat those package-provided MCP servers as the baseline, not the ceiling. Add extra MCP servers when the detected stack still justifies them.
-- Use `apm mcp search <term>` only for extra servers not covered by a package, such as Cisco Design System, Postgres, Playwright, Sentry, Kubernetes, or Terraform. Only add servers that provide clear value for the repo's actual workflow.
+- Use `apm mcp search <term>` only for extra servers not covered by a package, such as Postgres, Playwright, Sentry, Kubernetes, Terraform, or a public design-system server. Only add servers that provide clear value for the repo's actual workflow.
 - All MCP servers are declared in the `dependencies.mcp` section of `apm.yml` and installed through `apm install`.
 - Preserve any existing MCP entries in `apm.yml` and carry forward any repo-local MCP config that should remain supported.
 

@@ -1,7 +1,7 @@
 name: core
 version: 1.0.4
 description: Cisco workflow and security foundation package for AI-native repositories.
-author: Cisco GenAI
+author: Cisco Open Source
 
 dependencies:
   apm:

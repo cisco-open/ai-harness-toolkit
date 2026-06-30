@@ -1,7 +1,7 @@
 name: stack-spring-boot
 version: 1.0.4
 description: Spring Boot package with Java implementation and testing skills.
-author: Cisco GenAI
+author: Cisco Open Source
 
 dependencies:
   apm:

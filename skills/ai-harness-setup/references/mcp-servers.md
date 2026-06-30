@@ -40,7 +40,7 @@ Common search themes:
 - `langchain`
 - `ai`
 
-Only add servers that provide clear value for the repo's actual workflow. Good examples include Cisco Design System for Cisco UI repos, Playwright for browser automation, or Postgres for database-heavy backends.
+Only add servers that provide clear value for the repo's actual workflow. Good examples include Playwright for browser automation, Postgres for database-heavy backends, or a public design-system server for UI repos.
 
 Typical workflow:
 1. account for any MCP servers already bundled by the selected package
