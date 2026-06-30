@@ -29,15 +29,20 @@ Re-read steps 1-9 and the reference files they point to. For each step, verify t
 - `CONTRIBUTING.md` and `AGENTS.md` reference whichever spec-driven development system the repo uses.
 
 **Step 4 — Deterministic checks:**
+- Identify the configured enforcement mode first (`enforced` or `advisory`) by inspecting the generated scripts, tool configs, CI steps, and hook commands.
 - For every check category in the baseline (lint, type-check, test, build, security/SAST, dependency audit), verify:
   - A script, task, or command entry point exists in the repo (e.g., `package.json` script, Makefile target, Gradle task).
   - If the matching stack reference says a tool is REQUIRED (e.g., `eslint-plugin-unused-imports`, `eslint-plugin-sonarjs`, Husky, Semgrep), verify it is actually installed — present in `package.json` dependencies or the equivalent manifest, not just documented.
   - Config files for each tool exist (e.g., `eslint.config.*`, `tsconfig.json`, `ruff.toml`, `semgrep.yml`, or equivalent).
   - The config does not contradict other harness-generated files. For example, if a linter rule is mentioned as mandatory in `copilot-instructions.md` or `AGENTS.md`, the actual linter config must enable it.
+- Apply the right pass criteria for the detected enforcement mode:
+  - `enforced`: verify checks are configured to fail on findings or command failures.
+  - `advisory`: verify checks are configured to run and surface output without blocking, using the documented no-fail flags or CI wrappers.
 - **Dependency audit verification:** Verify that a dependency audit command exists as an executable script or task in the repo (e.g., `npm audit --audit-level=high`, `pnpm audit`, `pip-audit`, `mvn org.owasp:dependency-check-maven:check`), that it is included in the unified local validation command, and that it has a corresponding CI stage or step. A missing dependency audit command is a verification failure that must be fixed before the harness is considered complete.
 - A unified local validation command exists (e.g., `npm run validate`, `make check`, `uv run validate`) and it covers lint, type-check, test, build, security scan, and audit.
 - CI wiring: every local deterministic check has a corresponding stage or step in the CI config file. Open the CI config from the changeset and confirm 1:1 coverage.
 - Git hooks: if the stack reference recommends hooks (e.g., Husky + lint-staged for JS/TS), verify the hook tooling is installed and configured, not just documented.
+- Enforcement mode consistency: verify the same mode is expressed across local scripts, CI steps, and git hooks. For example, advisory-mode local scripts should not be paired with enforced CI stages or blocking hook commands.
 
 **Step 5 — Dependabot configuration:**
 - If `.github/dependabot.yml` or `.github/dependabot.yaml` already existed before the harness ran, verify no duplicate was created and the existing file was left untouched.
@@ -80,6 +85,7 @@ Scan all generated and modified files for internal contradictions:
 - The unified validation command must appear identically in: the manifest script, `docs/validation/local-validation-workflow.md`, `AGENTS.md`, `CONTRIBUTING.md`, and every AI IDE config file (`.github/copilot-instructions.md`, `.cursor/rules/`, `.windsurf/rules/`, `CLAUDE.md`, `opencode.jsonc` — whichever were created).
 - Safety boundaries stated in one IDE config must not contradict those in another.
 - Any tool listed as mandatory in one generated file must actually be installed and configured, not just mentioned.
+- The enforcement mode must be internally consistent across tool configs, local validation scripts, CI steps, and git hooks. Advisory signals such as `--exit-zero`, `|| true`, `continue-on-error: true`, `catchError(...)`, or non-failing Maven plugin flags should either appear together or not at all, based on the chosen mode.
 
 ## 4. Fix gaps
 
@@ -96,3 +102,4 @@ After all fixes are applied, output a summary with these sections:
 3. **Consistency check results** — any cross-file contradictions found and fixed.
 4. **Unresolvable items** — anything that requires human action (secrets, permissions, access grants, large refactors) with the specific action needed.
 5. **Final state** — the list of deterministic check commands available, the unified validation command, and the CI stages that mirror them.
+6. **Enforcement mode** — whether the harness is configured as enforced or advisory, plus the specific signals that proved it during verification.

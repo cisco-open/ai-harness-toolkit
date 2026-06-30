@@ -1,0 +1,21 @@
+name: stack-angular
+version: 1.0.4
+description: Angular package with direct frontend guidance, JS/TS base, and Chrome DevTools MCP.
+author: Cisco Open Source
+
+dependencies:
+  apm:
+    - angular/skills/skills/angular-developer
+    - vercel-labs/agent-skills/skills/web-design-guidelines
+    - git: cisco-open/ai-harness-toolkit
+      path: packages/core
+      ref: core-v1.0.4
+    - git: cisco-open/ai-harness-toolkit
+      path: packages/stack-javascript-typescript
+      ref: stack-javascript-typescript-v1.0.4
+  mcp:
+    - io.github.ChromeDevTools/chrome-devtools-mcp
+includes: auto
+devDependencies:
+  apm: []
+scripts: {}

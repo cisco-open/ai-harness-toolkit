@@ -26,7 +26,7 @@ Fresh project default when no existing manager is detected: `pnpm`
 
 ## Skill Search Terms
 
-Review repo-local skills and the `ai-harness-toolkit` skill inventory first, then use `npx skills find` (or `bunx skills find` for bun repos) only when broader discovery is still needed. Install selected skills with `apm install`.
+Review repo-local and public curated skill inventories first, then use `npx skills find` (or `bunx skills find` for bun repos) only when broader discovery is still needed. Install selected skills with `apm install`.
 
 Useful discovery queries include:
 
@@ -42,13 +42,15 @@ Install only the skills that fill real gaps in the repo's current inventory.
 
 ## Skills to Install
 
-Install these companion skills for TypeScript/JavaScript code-review support:
+Install the `stack-javascript-typescript` package as the default baseline for plain JavaScript/TypeScript repos:
 
 ```bash
-apm install github/awesome-copilot/skills/security-review
+apm install --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-javascript-typescript#stack-javascript-typescript-v<latest>
 ```
 
-Security review is cross-cutting and applies to all TypeScript/JavaScript projects regardless of framework.
+This package provides the shared JavaScript/TypeScript baseline. After that install, add only the extra dynamic skills the repo still needs, such as framework-specific, AI-runtime, or review/testing coverage that is not already bundled.
+
+Security review is still cross-cutting and applies to all TypeScript/JavaScript projects regardless of framework, whether it comes from the baseline package or an additional targeted install.
 
 ## Recommended Deterministic Baseline
 

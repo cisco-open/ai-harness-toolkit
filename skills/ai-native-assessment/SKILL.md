@@ -8,7 +8,7 @@ metadata:
 
 # AI-Native Assessment
 
-Use this skill to evaluate any repository's AI-native maturity. The scorecard assesses six weighted categories, computes a composite score on a 0-4 scale, assigns a maturity tier, and generates a prioritized list of recommended actions.
+Use this skill to evaluate any repository's AI-native maturity. The workflow starts with deterministic candidate and evidence discovery, then uses the LLM to score the repository. The bundled scanner can also emit deterministic scores when explicitly requested.
 
 ## When To Use It
 
@@ -34,6 +34,84 @@ Use this skill to evaluate any repository's AI-native maturity. The scorecard as
 - `templates/agentic-legibility-scorecard.md` -- template for the legibility sub-assessment section
 
 ## Workflow
+
+### Phase 1: Deterministic Detection (Zero Cost)
+
+Run the bundled detection script to gather all signals, candidates, and evidence deterministically:
+
+```bash
+python3 scripts/detect.py <repo_root>
+```
+
+If you want the script to also emit its deterministic score payload, use:
+
+```bash
+python3 scripts/detect.py <repo_root> --with-scoring
+```
+
+This produces a JSON object with:
+- Language and package manager detection
+- All tool candidates (lint/test/build/format/typecheck) with priority ranking and source provenance
+- Additional scan candidates (security, boundary, duplication, dead code, API contracts, infra, container, coverage)
+- Selected commands (best picks per kind)
+- Evidence-rich category signals for all six categories
+- AI validation staging (ambiguous commands, review suggestions)
+
+When `--with-scoring` is used, the JSON additionally includes:
+- Category 1-5 deterministic scores and Category 6 partial deterministic scores (8/18 sub-metrics)
+- Composite score and tier assignment
+- Recommended actions
+
+Parse the JSON output and use it as the foundation for Phase 2. Default mode is preferred when the model should own the final scoring decisions.
+
+**If the script fails**, fall back to the full LLM-based detection workflow below (steps 1-2).
+
+### Phase 2: LLM Repo Scan and Deep Scoring
+
+Phase 1 provides the structural foundation (what tools exist, what's configured, what's in CI). Phase 2 is where the LLM **reads actual code and content** to assess quality, consistency, and legibility - things a filesystem scan cannot determine.
+
+Using the Phase 1 JSON as starting context, the LLM must:
+
+1. **Scan representative source files** — read 5-10 source files across the codebase to assess:
+   - Naming consistency and semantic clarity
+   - Code comment quality and coverage
+   - Error handling patterns
+   - Type annotation depth beyond just "typecheck exists"
+   - Architecture clarity (can an agent understand the boundaries?)
+
+2. **Assess documentation quality** — read the actual content of AGENTS.md, CONTRIBUTING.md, README.md, and docs/ files to evaluate:
+   - Is the documentation actionable for an AI agent, or just boilerplate?
+   - Are onboarding paths clear?
+   - Are invariants and constraints documented?
+   - Is the dependency graph explained?
+
+3. **Score Category 6 deep sub-metrics** — the 10 sub-metrics requiring content reasoning:
+   - Semantic naming quality, API documentation clarity, error handling legibility, code comment informativeness, type coverage depth, dependency documentation, architecture explainability, onboarding path clarity, debug affordances, change impact clarity
+   - Score each using `references/agentic-legibility-framework.md`
+
+4. **Score the categories, or validate deterministic scores if present** - use Phase 1 evidence plus direct file reads:
+    - A linter may exist but be misconfigured or have all rules disabled
+    - A docs/ directory may exist but contain only stubs
+    - Skills may be installed but poorly written
+    - When `--with-scoring` was used, adjust scores with evidence when the deterministic signal overstates or understates reality
+    - **Review `ai_validation.evidence_gaps` when present** - these are sub-metrics where capability is present but strictness was not mechanically proven. For each gap:
+      - Read the relevant CI config (Jenkins, GitHub Actions, etc.) to verify enforcement
+      - Check if the validate/precommit scripts wire the check correctly
+      - Confirm or adjust the score with evidence
+
+5. **Validate CI pipeline alignment** — the deterministic scan detects CI keywords but cannot parse pipeline structure. The LLM should:
+   - Read CI config files (Jenkinsfile, GitHub Actions, etc.) to confirm checks actually run and fail the build
+   - Compare the CI capabilities to the local validate command — are they aligned?
+   - Verify parallelized stages are still enforcing (not `continue-on-error: true`)
+   - Check if coverage gates, lint strictness, or SAST are wired into CI with proper fail conditions
+
+6. **Resolve ambiguous command selections** — review `ai_validation.ambiguous_commands` and select the correct command if the priority-based selection was wrong
+
+The LLM receives structured evidence from Phase 1 (not starting from scratch), reducing token cost by ~80% while still performing a thorough qualitative assessment.
+
+### Fallback: Full LLM Detection
+
+If Phase 1 is unavailable, use the following parallelized detection workflow:
 
 ### Parallelization
 
@@ -144,6 +222,10 @@ If a previous scorecard exists at that path, overwrite it.
 
 **Write the Summary section last.** Complete all detailed per-sub-metric scoring tables, category averages, the agentic legibility composite, the overall composite calculation, and recommended actions before populating the Summary block at the top of the scorecard. Do not pre-populate summary scores before the detailed arithmetic is finished.
 
+### 7. Finish
+
+After writing `docs/ai-native-scorecard.md`, report the scorecard path, composite score, maturity tier, and the highest-impact recommended actions to the user. The local scorecard is the primary and only required output of this skill.
+
 ## Scoring Rules
 
 - `0` -- missing or actively hostile to agent workflows
@@ -157,7 +239,7 @@ If a previous scorecard exists at that path, overwrite it.
 - **Never include actual secret values in the scorecard.** When the assessment discovers hardcoded credentials, API keys, tokens, passwords, connection strings, or any other secret material in the target repository, the scorecard must note the **existence, type, and file location** of the secret (e.g., "Hardcoded MongoDB connection string with plaintext credentials found in `config/database.js:25`") but must **never quote, embed, or reproduce the actual secret values**. Use placeholder descriptions like `<redacted>` or describe the secret generically (e.g., "plaintext password", "auth token") instead of copying the literal value. This applies to all scorecard sections: evidence fields, notes, key strengths, key gaps, recommended actions, and any other prose.
 - **Template fidelity is mandatory.** Regardless of which model, IDE, or client invokes this skill, the final `docs/ai-native-scorecard.md` output structure must conform to `templates/ai-native-scorecard.md` rather than a model-invented format.
 - **No reasoning transcript in artifacts.** The scorecard is a final report, not a transcript. Final score calculations may be shown as part of the report, but never write chain-of-thought, internal reasoning, retries, arithmetic scratch work, or self-talk into `docs/ai-native-scorecard.md`.
-- **Assessment output.** This skill evaluates the repo and writes the scorecard output file to `docs/ai-native-scorecard.md`. No other modifications are made to the target repository.
+- **Assessment output.** This skill evaluates the repo and writes the scorecard output file. No other modifications are made to the target repository.
 - **Evidence-based scoring.** Every sub-metric score must reference concrete files, configs, commands, or their absence. Do not score based on inferred intent.
 - **No ad-hoc score adjustments.** Category scores for Categories 1-5 must equal the arithmetic mean of their sub-metric scores. Category 6 must equal the weighted composite defined in `references/agentic-legibility-framework.md`. The composite score must equal the weighted sum of category scores. Do not manually adjust, round up, or apply qualitative overrides to any score. If the rubric produces a result that feels unintuitive, note the concern in commentary but report the mathematically derived score.
 - **Artifact classification.** IDE-specific artifacts (VS Code chatmodes, Cursor commands, Copilot agents/prompts) count under Category 5 (AI IDE Configuration), not Category 3 (AI Tooling & Skills). Category 3 covers only standalone skills in a `skills/` or `.opencode/skills/` directory. Do not count the same artifact in multiple categories.

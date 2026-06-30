@@ -6,6 +6,11 @@ Use this file when wiring deterministic checks into the repo's CI system. Detect
 
 Every deterministic check that runs locally should have a corresponding CI stage, step, or job. CI should enforce the same checks as local development -- no more, no less.
 
+Choose one enforcement mode before wiring CI:
+
+- `enforced`: deterministic checks fail the pipeline on findings
+- `advisory`: deterministic checks still run and surface output, but CI remains green or unstable rather than failed
+
 ## Detecting the CI System
 
 Look for:
@@ -57,6 +62,37 @@ stage('Deterministic Checks') {
 ```
 
 Replace `{lint_command}`, `{type_check_command}`, etc. with the actual commands from the stack-specific deterministic scans reference, using the detected package manager.
+
+### Advisory Mode in Jenkins
+
+When advisory mode is selected, wrap each deterministic check so the build stays successful while the stage is marked unstable:
+
+```groovy
+stage('Deterministic Checks') {
+    steps {
+        catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+            sh '{lint_command}'
+        }
+        catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+            sh '{type_check_command}'
+        }
+        catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+            sh '{test_command}'
+        }
+        catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+            sh '{sast_command}'
+        }
+        catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+            sh '{audit_command}'
+        }
+        catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+            sh '{build_command}'
+        }
+    }
+}
+```
+
+Remove the `catchError(...)` wrappers when the repo upgrades to enforced mode.
 
 ### When to Add a New Stage vs. Modify an Existing One
 
@@ -125,6 +161,47 @@ jobs:
         run: {build_command}
 ```
 
+### Advisory Mode in GitHub Actions
+
+When advisory mode is selected, add `continue-on-error: true` to each deterministic check step:
+
+```yaml
+jobs:
+  deterministic-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: {install_command}
+
+      - name: Lint
+        continue-on-error: true
+        run: {lint_command}
+
+      - name: Type check
+        continue-on-error: true
+        run: {type_check_command}
+
+      - name: Tests
+        continue-on-error: true
+        run: {test_command}
+
+      - name: Security scan
+        continue-on-error: true
+        run: {sast_command}
+
+      - name: Dependency audit
+        continue-on-error: true
+        run: {audit_command}
+
+      - name: Build verification
+        continue-on-error: true
+        run: {build_command}
+```
+
+Remove `continue-on-error: true` when the repo upgrades to enforced mode.
+
 ### When to Add a New Job vs. Add Steps
 
 - If the workflow already has a `test` or `ci` job, **add missing checks as new steps** within that job.
@@ -148,5 +225,6 @@ Or use a matrix strategy with a change detection step.
 
 - **Reuse existing scripts.** If the repo has `make ci-check`, `./scripts/validate.sh`, or equivalent, call those from CI rather than duplicating individual commands.
 - **Match local commands exactly.** CI should run the same commands that developers run locally. If local validation uses `make check`, CI should use `make check`.
+- **Keep enforcement mode consistent.** If local commands or hooks are advisory, CI should also be advisory until the repo is intentionally tightened.
 - **Document gaps explicitly.** If a check cannot be wired into CI immediately (e.g., missing credentials for a scanning tool), document it as a follow-up item rather than silently omitting it.
 - **Keep CI config minimal.** Prefer calling a single validation script from CI over listing every check command inline. This ensures local and CI stay in sync.

@@ -1,6 +1,6 @@
 # AI-Native Assessment
 
-Use `ai-native-assessment` to evaluate and score how AI-native a repository is. The skill scans the repo for AI primitives — spec-driven development, deterministic checks, AI skills, documentation, IDE configuration, and agentic legibility — and produces a scored markdown report with prioritized recommended actions.
+Use `ai-native-assessment` to evaluate how AI-native a repository is. The skill first scans the repo for AI primitives - spec-driven development, deterministic checks, AI skills, documentation, IDE configuration, and agentic legibility - and uses that evidence to produce a scored markdown report with prioritized recommended actions.
 
 ## Two Installation Options
 
@@ -8,7 +8,7 @@ You can install this skill with either `apm` or `npx skills`.
 
 ## Option 1: Install With APM
 
-Use this option when you want the skill managed as a dependency and deployed to one or more supported targets.
+Use this option when you want the skill managed as a dependency.
 
 ### Prerequisites
 
@@ -19,14 +19,8 @@ Use this option when you want the skill managed as a dependency and deployed to 
 ### Install The Skill
 
 ```bash
-apm install cisco-open/ai-harness-toolkit/skills/ai-native-assessment -t opencode -t cursor -t copilot
+apm install cisco-open/ai-harness-toolkit/skills/ai-native-assessment
 ```
-
-Notes:
-
-- Adjust the `-t` targets to match the tools you use.
-- For OpenCode only, `-t opencode` is enough.
-- For private repository access, ensure `GITHUB_TOKEN` is exported in your shell before running `apm install`.
 
 ### Verify The Install
 
@@ -48,6 +42,50 @@ You can verify the CLI and installed skills with:
 ```bash
 npx skills --version
 npx skills list
+```
+
+## How To Invoke It
+
+Some AI CLIs expose installed skills as slash commands. When they do, prefer invoking `ai-native-assessment` that way.
+
+### OpenCode
+
+```text
+Use the ai-native-assessment skill for this repository.
+```
+
+### Cursor
+
+```text
+/ai-native-assessment
+```
+
+### GitHub Copilot Chat
+
+```text
+/ai-native-assessment
+```
+
+### Claude Code
+
+```text
+/ai-native-assessment
+```
+
+## Bundled Detection Script
+
+The skill includes `scripts/detect.py` for fast deterministic discovery.
+
+Default mode returns candidates, selected commands, additional scans, category signals, and AI validation hints so the model can make the scoring decisions:
+
+```bash
+python3 scripts/detect.py <repo_root>
+```
+
+If you want the script to also include deterministic category scores and recommended actions, opt in explicitly:
+
+```bash
+python3 scripts/detect.py <repo_root> --with-scoring
 ```
 
 ## Typical Outputs

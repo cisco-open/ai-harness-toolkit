@@ -1,0 +1,18 @@
+name: stack-spring-boot
+version: 1.0.4
+description: Spring Boot package with Java implementation and testing skills.
+author: Cisco Open Source
+
+dependencies:
+  apm:
+    - git: cisco-open/ai-harness-toolkit
+      path: packages/core
+      ref: core-v1.0.4
+    - github/awesome-copilot/skills/java-springboot
+    - github/awesome-copilot/skills/spring-boot-testing
+    - github/awesome-copilot/skills/java-junit
+  mcp: []
+includes: auto
+devDependencies:
+  apm: []
+scripts: {}

@@ -1,0 +1,60 @@
+name: ai-harness-toolkit
+version: 1.0.0
+description: Cisco AI harness skills repo and APM marketplace for reusable workflow and stack packages.
+marketplace:
+  owner:
+    name: cisco-open
+    url: https://github.com/cisco-open
+
+  build:
+    tagPattern: "{name}-v{version}"
+
+  outputs:
+    claude: {}
+
+  versioning:
+    strategy: per_package
+
+  packages:
+    - name: core
+      source: cisco-open/ai-harness-toolkit
+      subdir: packages/core
+      ref: core-v1.0.4
+      description: Tier 1 workflow and security foundation for Cisco AI-native repositories.
+      tags: [foundation, workflow, security]
+    - name: stack-javascript-typescript
+      source: cisco-open/ai-harness-toolkit
+      subdir: packages/stack-javascript-typescript
+      ref: stack-javascript-typescript-v1.0.4
+      description: JavaScript and TypeScript base package for web composition.
+      tags: [javascript, typescript]
+    - name: stack-frontend
+      source: cisco-open/ai-harness-toolkit
+      subdir: packages/stack-frontend
+      ref: stack-frontend-v1.0.4
+      description: Frontend web package with design guidance and Chrome DevTools MCP.
+      tags: [frontend, web, mcp]
+    - name: stack-react
+      source: cisco-open/ai-harness-toolkit
+      subdir: packages/stack-react
+      ref: stack-react-v1.0.4
+      description: React package with direct frontend guidance, JS/TS base, and Chrome DevTools MCP.
+      tags: [react, frontend, testing]
+    - name: stack-angular
+      source: cisco-open/ai-harness-toolkit
+      subdir: packages/stack-angular
+      ref: stack-angular-v1.0.4
+      description: Angular package with direct frontend guidance, JS/TS base, and Chrome DevTools MCP.
+      tags: [angular, frontend]
+    - name: stack-python-uv
+      source: cisco-open/ai-harness-toolkit
+      subdir: packages/stack-python-uv
+      ref: stack-python-uv-v1.0.4
+      description: Python and uv package with coding and security review skills.
+      tags: [python, uv, security]
+    - name: stack-spring-boot
+      source: cisco-open/ai-harness-toolkit
+      subdir: packages/stack-spring-boot
+      ref: stack-spring-boot-v1.0.4
+      description: Spring Boot package with Java implementation and testing skills.
+      tags: [java, spring-boot, testing]

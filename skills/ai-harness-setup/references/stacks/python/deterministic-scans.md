@@ -86,9 +86,35 @@ Substitute `{run}` with the appropriate command prefix for the detected package 
 | tests | `{run} pytest` |
 | packaging check | `{run} python -m build` |
 
+Choose one enforcement mode before wiring these commands:
+
+- `enforced`: use the commands above as blocking checks
+- `advisory`: keep the same commands, but switch to native no-fail options where available
+
+## Advisory Mode Configuration
+
+In advisory mode, keep every deterministic check installed and wired, but make findings non-blocking:
+
+- use `ruff check --exit-zero`
+- use `bandit --exit-zero`
+- suffix `pip-audit` with `|| true`
+- if the harness is introducing a new type checker, suffix that command with `|| true` until the repo is ready to enforce it
+
+Examples:
+
+```bash
+uv run ruff check . --exit-zero
+uv run bandit -r . --exit-zero
+uv run pip-audit || true
+uv run mypy . || true
+```
+
+If the repo already had a type checker before the harness setup, keep using it as detected and decide whether to preserve existing enforcement rather than loosening it automatically.
+
 ## Wiring Rules
 
 - keep one documented validation path
 - use the detected package manager's run wrapper for local and CI consistency
+- keep the chosen enforcement mode consistent across local commands, hooks, and CI
 - add pre-push or CI hooks only after the commands pass locally
 - for monorepos with uv workspaces, determine whether checks should run at the workspace root or per-package and document the approach

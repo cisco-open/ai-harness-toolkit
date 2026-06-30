@@ -3,7 +3,7 @@ name: ai-harness-setup
 description: Build a step-by-step path from a plain repository to a full agent-driven engineering workflow. Inspects the repo first to detect the full tech stack, package managers, CI systems, and monorepo layout before making any changes. Then initializes APM, sets up spec-driven development (OpenSpec by default, or respects existing systems like SpecKit and BMAD), adds deterministic checks matched to the detected stack, installs applicable AI skills, creates workflow documentation, configures AI IDEs (Copilot, Cursor, Windsurf, Claude Code, OpenCode), and verifies the entire setup.
 compatibility: NodeJS, APM or permission to install it, and access to the target repository
 metadata:
-  version: "3.0"
+  version: "3.1"
 ---
 
 # AI Harness Setup
@@ -22,15 +22,16 @@ Use this skill to bootstrap a repository toward a durable agent-driven workflow:
    - `references/stacks/javascript-typescript/framework-angular.md`
    - `references/stacks/java/framework-spring-boot.md`
 4. Ask whether the team wants GitHub Agentic Workflows enabled in this repository.
-5. If yes, read `references/github-agentic-workflows.md` before installing AI workflow tooling.
-6. Read `references/ai-tooling.md` before initializing APM or installing skills.
-7. Read `references/mcp-servers.md` before adding MCP servers to `apm.yml`.
-8. Read `references/openspec.md` for change management setup.
-9. Read `references/deterministic-checks-core.md` and the matching per-stack `deterministic-scans.md` together -- they form one phase.
-10. Read `references/dependabot.md` when adding Dependabot configuration.
-11. Read `references/docs-bootstrap.md` when creating the docs section that explains the workflow.
-12. Read `references/opencode.md` when OpenCode or `ocx` support is requested.
-13. **Verify is mandatory.** After all setup steps finish, run Step 10 to audit the changeset against the harness instructions, fix every gap found, and produce a verify report. Never skip this step.
+5. Ask whether deterministic checks should be `enforced` or `advisory` before configuring any checks. Carry that answer through all downstream local scripts, CI wiring, and git hooks.
+6. If GitHub Agentic Workflows are enabled, read `references/github-agentic-workflows.md` before installing AI workflow tooling.
+7. Read `references/ai-tooling.md` before initializing APM or installing package-backed skills.
+8. Read `references/mcp-servers.md` before adding extra MCP servers to `apm.yml`.
+9. Read `references/openspec.md` for change management setup.
+10. Read `references/deterministic-checks-core.md` and the matching per-stack `deterministic-scans.md` together -- they form one phase.
+11. Read `references/dependabot.md` when adding Dependabot configuration.
+12. Read `references/docs-bootstrap.md` when creating the docs section that explains the workflow.
+13. Read `references/opencode.md` when OpenCode or `ocx` support is requested.
+14. **Verify is mandatory.** After all setup steps finish, run the Verify step in Workflow Step 10 to audit the changeset against the harness instructions, fix every gap found, and produce a verify report. Never skip this step.
 
 For non-trivial setup work, use subagents to split independent exploration or authoring tasks across stack, tooling, validation, and documentation domains, then merge the results in one final coordinating pass.
 
@@ -42,7 +43,7 @@ Run this step before making any changes. The results drive every decision in lat
 
 - Search manifests, lockfiles, CI configs, framework configs, dependency declarations, and existing docs.
 - Do not stop at top-level markers. Search deeply for framework configs, nested package files, and CI pipeline definitions.
-- Ask early whether the team wants GitHub Agentic Workflows enabled so the setup path can either include or skip that layer intentionally.
+- Ask early whether the team wants GitHub Agentic Workflows enabled and whether deterministic checks should be enforced or advisory so the setup path can either include or skip that layer intentionally and wire checks correctly.
 - **Detect and record:**
   - Languages and their versions
   - Package managers (npm, pnpm, bun, yarn, uv, poetry, pip, Maven, Gradle)
@@ -110,6 +111,8 @@ Ensure the repo has a spec-driven development system for managing non-trivial ch
 
 Combine the language-agnostic baseline with stack-specific checks in a single pass, informed by the detection results from step 1.
 
+Before configuring any deterministic checks, ask: "Do you want deterministic checks enforced or advisory?" Apply that one answer uniformly to all deterministic checks, CI steps, and git hooks that this workflow wires in.
+
 **Language-agnostic baseline** (use `references/deterministic-checks-core.md`):
 - dependency or vulnerability audit
 - SAST or Semgrep-style scanning
@@ -149,31 +152,48 @@ Ensure the repo has a Dependabot configuration for automated dependency updates 
 - If the answer is yes, use `references/github-agentic-workflows.md` as the source of truth for `gh aw` installation, workflow import, generated files, and post-install token guidance.
 - If the answer is no, skip `gh aw` setup entirely.
 
-**Language-agnostic workflow skills** (install these regardless of stack):
+Use a package-first install flow. The curated APM packages are the default delivery path for skills and any MCP servers they already bundle.
+
 - Start with `apm --version`.
 - Audit repo-local skill directories and existing APM dependencies before installing duplicates.
 - Initialize APM first if the repo does not already have `apm.yml`.
-- Install repo-local workflow skills first when the repo already carries them or when a local path dependency is the right source.
-- Prioritize workflow skills such as:
-  - `create-pull-request-with-reviewers`
-  - `gh-pr-comment-resolution`
-  - `reflect-on-changes`
-- Pull security review rules and guidance from Project CodeGuard as part of the setup, including its software-security skill set.
+- Resolve the latest published package tag at install time. Use `git ls-remote --tags https://github.com/cisco-open/ai-harness-toolkit "<name>-v*"`, sort the returned tags by semver, and install the newest matching tag. Do not hardcode package versions in this skill.
+- Use protocol fallback in every package install command:
 
-**Stack-specific skills** (install only what matches the detected stack from step 1):
-- Browse `ai-harness-toolkit` directly to review the available vendored skills, then install only those that are applicable to this repo's detected stack and workflow needs. Do not install everything.
-- For broader ecosystem discovery, use `npx skills find <query>` only as a search mechanism, then install the chosen skill with `apm install <package>`.
-- When a needed skill is not already vendored locally, prefer installing it from `ai-harness-toolkit` before searching more broadly.
-- Use `references/ai-tooling.md` for the install order, local-path examples, and search strategy.
+```bash
+apm install --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/<name>#<name>-v<latest>
+```
+
+- Choose the default package from the detection results in step 1:
+
+| Detected stack | Install |
+| --- | --- |
+| JavaScript/TypeScript, no framework | `stack-javascript-typescript` |
+| Vue, Svelte, or other generic web UI | `stack-frontend` |
+| React or Next.js | `stack-react` |
+| Angular | `stack-angular` |
+| Python managed with `uv` | `stack-python-uv` |
+| Java with Spring Boot | `stack-spring-boot` |
+- Every `stack-*` package already pulls `core` transitively. Do not install `core` separately when a stack package matches.
+- If no stack package matches (for example Go, Rust, plain Java, or another unpackaged backend), install `core` explicitly and then add only the extra dynamic skills that the detected stack still needs.
+- Use `references/ai-tooling.md` for the install mechanics, what-to-commit rules, and dynamic fallback workflow.
+
+**Dynamic fallback and add-ons:**
+- Use the matching package as the default baseline when one exists, then add only the extra dynamic skills that cover real repo-specific gaps.
+- Browse repo-local and public curated sources first for Cisco-curated skills that match the detected stack.
+- Use `npx skills find <query>` only as a search mechanism when the needed skill is not already available through repo-local or public curated sources.
+- If no package matches (for example FastAPI, Django, plain Java, Go, Rust, LangGraph, or CopilotKit), keep that part of the stack dynamic.
 
 ### 6b. Add MCP Servers
 
 Add MCP servers to `apm.yml` based on the detected tech stack. MCP servers give agents runtime access to external tools and services.
 
-- Read `references/mcp-servers.md` for the baseline defaults, discovery workflow, and APM dependency format.
+- Read `references/mcp-servers.md` for the package-backed defaults, discovery workflow, and APM dependency format.
 - Inspect the repo for existing MCP declarations in `opencode.jsonc`, `.opencode/`, Cursor, Claude, and similar config files, then migrate those definitions into `apm.yml` so APM becomes the single source of truth.
-- Add Chrome DevTools MCP for any repo with a browser-facing UI (React, Angular, Next.js, Vue, Svelte, Electron, Tauri, etc.).
-- Use `apm mcp search <term>` to discover additional servers that match the frameworks, databases, cloud providers, CI systems, and other tools detected in step 1. Only add servers that provide clear value for the repo's actual workflow.
+- Treat package-provided MCP servers as already handled by the corresponding package install:
+  - `stack-frontend`, `stack-react`, and `stack-angular` provide Chrome DevTools.
+- Treat those package-provided MCP servers as the baseline, not the ceiling. Add extra MCP servers when the detected stack still justifies them.
+- Use `apm mcp search <term>` only for extra servers not covered by a package, such as Postgres, Playwright, Sentry, Kubernetes, Terraform, or a public design-system server. Only add servers that provide clear value for the repo's actual workflow.
 - All MCP servers are declared in the `dependencies.mcp` section of `apm.yml` and installed through `apm install`.
 - Preserve any existing MCP entries in `apm.yml` and carry forward any repo-local MCP config that should remain supported.
 
@@ -182,7 +202,6 @@ Add MCP servers to `apm.yml` based on the detected tech stack. MCP servers give 
 **Synthesis checkpoint:** Before writing docs, consolidate all findings from steps 1-6. The docs must accurately reflect everything that was detected, installed, and configured.
 
 - **Verify `docs/` is not gitignored.** Run `git check-ignore docs/` before creating any files. If `docs/` is ignored, update `.gitignore` first -- otherwise the entire docs tree will be invisible to git.
-
 - **Research deeply before writing.** Read source code, configs, CI pipelines, deployment configs, data models, API definitions, and integration points. Every doc should contain material that could only come from actually reading this repo.
 - Use `references/docs-bootstrap.md` for the full seed structure, research checklist, and authoring order.
 - Create architecture docs first (system overview, services, data model, integrations) because they require the deepest research and inform everything else.
@@ -198,7 +217,7 @@ Add MCP servers to `apm.yml` based on the detected tech stack. MCP servers give 
 
 - If the repo uses OpenCode, merge config instead of replacing it.
 - Use `references/opencode.md` for the file-level config, plugin, command, and verification details.
-- For repos that also use Cursor or GitHub Copilot, install reusable skills with `apm install <package> -t opencode -t cursor -t copilot` and let the CLI materialize the repo-local layout.
+- For repos that also use Cursor or GitHub Copilot, install reusable skills with `apm install <package>` and let the CLI materialize the repo-local layout.
 - Ensure the repo's OpenCode layer includes the required plugin packages and permission rules.
 - Add MCP server entries only when they match the detected stack. See `references/mcp-servers.md` for the baseline and discovery workflow, and `references/opencode.md` for OpenCode-specific MCP config.
 
@@ -247,18 +266,18 @@ Use `references/verify-harness.md` for the full verification procedure. It cover
 - `references/deterministic-checks-core.md` - language-agnostic deterministic baseline
 - `references/deterministic-scans.md` - cross-language deterministic scan overview
 - `references/dependabot.md` - Dependabot configuration guard-rails, ecosystem mapping, and defaults
-- `references/ai-tooling.md` - APM initialization, skill installation, and discovery workflow
-- `references/mcp-servers.md` - MCP server baseline, stack-driven discovery, and APM dependency format
+- `references/ai-tooling.md` - APM initialization, package install mechanics, and dynamic fallback workflow
+- `references/mcp-servers.md` - package-provided MCP defaults, extra MCP discovery, and APM dependency format
 - `references/opencode.md` - OpenCode and ocx config patterns
 - `references/docs-bootstrap.md` - how to create the docs section
 - `references/verify-harness.md` - full verification procedure for Step 10 (changeset audit, per-step checks, consistency, gap fixing, report)
 - `references/ci-wiring.md` - CI integration patterns for Jenkins and GitHub Actions
 - `references/stacks/javascript-typescript/stack.md` - JS/TS-specific setup
 - `references/stacks/javascript-typescript/deterministic-scans.md` - JS/TS deterministic commands and wiring
-- `references/stacks/javascript-typescript/framework-react.md` - React and Next.js setup plus recommended skills
-- `references/stacks/javascript-typescript/framework-angular.md` - Angular setup plus recommended skills
-- `references/stacks/python/stack.md` - Python-specific setup
+- `references/stacks/javascript-typescript/framework-react.md` - React and Next.js setup plus the `stack-react` package
+- `references/stacks/javascript-typescript/framework-angular.md` - Angular setup plus the `stack-angular` package
+- `references/stacks/python/stack.md` - Python-specific setup plus the `stack-python-uv` package
 - `references/stacks/python/deterministic-scans.md` - Python deterministic commands and wiring
 - `references/stacks/java/stack.md` - Java-specific setup
 - `references/stacks/java/deterministic-scans.md` - Java deterministic commands and wiring
-- `references/stacks/java/framework-spring-boot.md` - Spring Boot setup plus recommended skills
+- `references/stacks/java/framework-spring-boot.md` - Spring Boot setup plus the `stack-spring-boot` package

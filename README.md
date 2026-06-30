@@ -15,7 +15,9 @@
 - [Who This Is For](#who-this-is-for)
 - [Core Workflows](#core-workflows)
 - [Supporting Skills](#supporting-skills)
+- [APM Packages](#apm-packages)
 - [Quick Start](#quick-start)
+- [Repository Structure](#repository-structure)
 - [Learn More](#learn-more)
 - [Contributing](#contributing)
 - [Security](#security)
@@ -25,7 +27,7 @@
 
 ## At a Glance
 
-| If you want to… | Start here |
+| If you want to... | Start here |
 | --- | --- |
 | Bootstrap high-quality agent-driven development with deterministic checks, specs, and clear guardrails | [ai-harness-setup](skills/ai-harness-setup/README.md) |
 | Score your repository's AI-native maturity and get prioritized next steps | [ai-native-assessment](skills/ai-native-assessment/README.md) |
@@ -73,30 +75,126 @@ These supporting skills are bundled so the primary workflows can build on a cons
 
 | Skill | Purpose |
 | --- | --- |
+| [commit-and-push-changes](skills/commit-and-push-changes/SKILL.md) | Commit and push intentional changes while excluding unrelated files |
+| [code-review](skills/code-review/SKILL.md) | Run stack-aware review lanes and synthesize findings for changed code |
 | [create-pull-request-with-reviewers](skills/create-pull-request-with-reviewers/SKILL.md) | Open pull requests with reviewer recommendations based on your repository history |
 | [gh-pr-comment-resolution](skills/gh-pr-comment-resolution/SKILL.md) | Fetch and resolve GitHub pull request review threads |
+| [pr-follow-up](skills/pr-follow-up/SKILL.md) | Monitor PR comments and checks after a pull request is opened |
 | [reflect-on-changes](skills/reflect-on-changes/SKILL.md) | Review recent changes and update related guidance or conventions |
 | [python-best-practices](skills/python-best-practices/SKILL.md) | Improve Python code quality across anti-patterns, testing, error handling, and performance |
 
 ---
 
+## APM Packages
+
+This repo also publishes composable APM package manifests under `packages/`, with marketplace metadata rooted at `apm.yml`.
+
+`packages/` is the source-of-truth package graph for transitive composition. For dependency-bearing packages, use direct tagged package refs against `packages/<name>` as the supported install path.
+
+Install APM `0.18.0+` first and make sure your shell resolves that binary before any older system copy:
+
+```bash
+curl -sSL https://aka.ms/apm-unix | APM_INSTALL_DIR="$HOME/.local/bin" sh -s -- @v0.18.0
+export PATH="$HOME/.local/bin:$PATH"
+apm --version
+```
+
+Use this install shape:
+
+```bash
+apm install --allow-protocol-fallback [--trust-transitive-mcp] cisco-open/ai-harness-toolkit/packages/<package>#<package>-v<version>
+```
+
+- Use `--trust-transitive-mcp` for packages that include MCP servers directly.
+- Keep `--allow-protocol-fallback` in the command for GitHub transport compatibility.
+
+Package layout:
+
+```text
+core
+|\
+| +-- stack-javascript-typescript
+| |   |
+| |   +-- stack-frontend
+| |   +-- stack-react
+| |   +-- stack-angular
+| |
+| +-- stack-python-uv
+| +-- stack-spring-boot
+```
+
+Available packages:
+
+| Package | Description |
+| --- | --- |
+| `core` | Cisco workflow and software-security foundation |
+| `stack-javascript-typescript` | JavaScript and TypeScript base package for web composition on top of `core` |
+| `stack-frontend` | Frontend web package with `core`, JS/TS base, design guidance, and Chrome DevTools MCP |
+| `stack-react` | React package with frontend guidance, JS/TS base, and Chrome DevTools MCP |
+| `stack-angular` | Angular package with frontend guidance, JS/TS base, and Chrome DevTools MCP |
+| `stack-python-uv` | Python and uv package with coding and security review skills |
+| `stack-spring-boot` | Spring Boot package with Java implementation and testing skills |
+
+---
+
 ## Quick Start
 
-Choose the workflow you want to start with, copy the command you need, and then follow the linked skill documentation for prerequisites, targets, and detailed usage.
+Choose the workflow you want to start with, copy the command you need, and then follow the linked skill documentation for prerequisites and detailed usage. Use the package install commands above when you want a full stack package instead of a single skill.
 
 ### Bootstrap your repository
 
 | Install option | Command |
 | --- | --- |
-| **APM** | `apm install cisco-open/ai-harness-toolkit/skills/ai-harness-setup -t opencode -t cursor -t copilot` |
+| **APM** | `apm install cisco-open/ai-harness-toolkit/skills/ai-harness-setup` |
 | **npx skills** | `npx skills add https://github.com/cisco-open/ai-harness-toolkit --skill ai-harness-setup` |
 
 ### Assess AI-native maturity
 
 | Install option | Command |
 | --- | --- |
-| **APM** | `apm install cisco-open/ai-harness-toolkit/skills/ai-native-assessment -t opencode -t cursor -t copilot` |
+| **APM** | `apm install cisco-open/ai-harness-toolkit/skills/ai-native-assessment` |
 | **npx skills** | `npx skills add https://github.com/cisco-open/ai-harness-toolkit --skill ai-native-assessment` |
+
+---
+
+## Repository Structure
+
+```text
+ai-harness-toolkit/
+|-- LICENSE                              # Apache 2.0
+|-- README.md
+|-- CONTRIBUTING.md
+|-- CODE_OF_CONDUCT.md
+|-- SECURITY.md
+|-- NOTICE                               # Third-party attributions
+|-- apm.yml                              # Root APM marketplace manifest
+|-- docs/
+|   `-- images/
+|       `-- readme-banner.svg
+|-- .github/
+|   |-- ISSUE_TEMPLATE/
+|   |   |-- bug_report.md
+|   |   `-- feature_request.md
+|   `-- PULL_REQUEST_TEMPLATE.md
+|-- packages/
+|   |-- core/
+|   |-- stack-angular/
+|   |-- stack-frontend/
+|   |-- stack-javascript-typescript/
+|   |-- stack-python-uv/
+|   |-- stack-react/
+|   `-- stack-spring-boot/
+`-- skills/
+    |-- ai-harness-setup/
+    |-- ai-native-assessment/
+    |-- code-review/
+    |-- commit-and-push-changes/
+    |-- create-pull-request-with-reviewers/
+    |-- gh-pr-comment-resolution/
+    |-- pr-follow-up/
+    |-- reflect-on-changes/
+    `-- python-best-practices/
+```
 
 ---
 
@@ -123,31 +221,3 @@ If you discover a security issue, follow the reporting guidance in [SECURITY.md]
 ## License
 
 Licensed under [Apache 2.0](LICENSE). Copyright 2025 Cisco Systems, Inc.
-
----
-
-<!--
-## Image Ideas (for later creation)
-
-Consider one of these as the hero image at the top of the README:
-
-1. **Before/After split-screen** – Left side shows a chaotic terminal with scattered
-   prompts and no structure; right side shows a clean repository with checks passing,
-   skills installed, and a scorecard. Conveys "from vibe coding to structured workflow."
-
-2. **Workflow diagram** – A minimal flowchart: "Your Repo" → ai-harness-setup →
-   (deterministic checks, specs, skills, docs) → ai-native-assessment → scored
-   maturity report. Clean lines, no clutter, dark or light theme friendly.
-
-3. **Maturity ladder** – A vertical progression graphic showing tiers (Unaware →
-   Nascent → Structured → Established → Exemplary) with the toolkit logo marking
-   the path upward. Reinforces the assessment angle.
-
-4. **Toolbelt / harness metaphor** – A stylized climbing harness or utility belt with
-   labeled tools (checks, specs, skills, docs) clipped in. Plays on the "harness"
-   name visually.
-
-Pick whichever resonates with the project's tone. A clean SVG or PNG at ~1200×400px
-works well as a GitHub README hero banner.
--->
-

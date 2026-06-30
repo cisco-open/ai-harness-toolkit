@@ -7,8 +7,8 @@ Use this file when the repo contains Spring Boot dependencies, starters, or comm
 Baseline packages and plugins usually include:
 
 - Spring Boot starter dependencies needed by the app
-- `maven-compiler-plugin` or Gradle Java plugin config
-- `maven-surefire-plugin` or Gradle test task config
+- `maven-compiler-plugin` or Gradle Java plugin configuration
+- `maven-surefire-plugin` or Gradle test task configuration
 - `spotbugs-maven-plugin` or Gradle SpotBugs plugin
 - `maven-checkstyle-plugin` or equivalent style plugin
 - `dependency-check-maven` or Gradle OWASP dependency-check plugin
@@ -24,13 +24,13 @@ Baseline packages and plugins usually include:
 
 Focus this file on Spring Boot-specific additions instead of shared workflow tooling.
 
-Install the Spring Boot skill and testing companions from GitHub's awesome-copilot collection:
+Install the `stack-spring-boot` package:
 
 ```bash
-apm install github/awesome-copilot/skills/java-springboot
-apm install github/awesome-copilot/skills/spring-boot-testing
-apm install github/awesome-copilot/skills/java-junit
+apm install --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-spring-boot#stack-spring-boot-v<latest>
 ```
+
+This package covers `java-springboot`, `spring-boot-testing`, `java-junit`, and the transitive `core` workflow bundle.
 
 If the repo includes frontend or AI integrations, add those framework skills separately.
 

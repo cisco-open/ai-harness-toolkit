@@ -6,6 +6,16 @@ Use this file for the language-agnostic validation layer that should exist befor
 
 Prefer repeatable commands that can run locally and in CI without human judgment.
 
+## Progressive Enforcement
+
+Before configuring deterministic checks, ask one binary question: do you want deterministic checks `enforced` or `advisory`?
+
+- `enforced` keeps the current behavior: checks exit non-zero on failures and block commits or CI
+- `advisory` keeps the same checks wired in, but they surface findings without blocking local workflows, hooks, or CI
+- apply the chosen mode uniformly across all deterministic checks; do not mix enforced lint with advisory audit inside the harness defaults
+
+This mode selection applies to local scripts, CI wiring, and git hooks together. The harness should install the full tooling surface either way. The only change is whether findings fail the workflow.
+
 ## Minimum Cross-Repo Baseline
 
 Every repo should define a documented path for:
@@ -74,7 +84,25 @@ Key principles:
 - detect the CI system during the repo inspection phase (step 1)
 - match local checks 1:1 with CI stages or steps
 - reuse existing CI scripts and shared libraries when present
+- keep the enforcement mode consistent between local commands, hooks, and CI steps
 - document any checks that cannot be wired into CI immediately as explicit follow-up work
+
+## Upgrade Path: Advisory to Enforced
+
+Advisory mode is meant to help existing repos adopt the full check surface without blocking on day one. Upgrading to enforced mode should be a config-only change, not a rewiring project.
+
+- JS/TS ESLint: change harness-added rules from `warn` back to `error`
+- JS/TS hooks, audit, and Semgrep: remove the `|| true` suffixes from the generated commands
+- Python ruff: remove `--exit-zero`
+- Python bandit: remove `--exit-zero`
+- Python audit and newly introduced type-checkers: remove `|| true`
+- Java checkstyle: set `<failOnViolation>true</failOnViolation>`
+- Java SpotBugs: set `<failOnError>true</failOnError>`
+- Java OWASP dependency-check: lower `<failBuildOnCVSS>` from `11` to the repo's intended threshold
+- GitHub Actions: remove `continue-on-error: true` from deterministic check steps
+- Jenkins: remove `catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE')` wrappers around deterministic check stages
+
+After flipping these settings, the same local entry point, CI stages, and hooks should remain in place; only their pass/fail behavior changes.
 
 ## Verification
 
