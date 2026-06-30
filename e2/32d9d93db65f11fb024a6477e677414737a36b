@@ -1,0 +1,57 @@
+skills/ai-harness-setup/references/ai-tooling.md
+  s_f1115bf3c6307d::t_bf47b75e77c9f0 23,26
+packages/core/README.md
+  s_f1115bf3c6307d::t_bf47b75e77c9f0 18
+skills/ai-harness-setup/references/stacks/javascript-typescript/framework-angular.md
+  s_f1115bf3c6307d::t_bf47b75e77c9f0 29
+packages/stack-frontend/README.md
+  s_f1115bf3c6307d::t_bf47b75e77c9f0 22
+packages/stack-angular/README.md
+  s_f1115bf3c6307d::t_bf47b75e77c9f0 19
+packages/stack-spring-boot/README.md
+  s_f1115bf3c6307d::t_bf47b75e77c9f0 15
+skills/ai-harness-setup/references/docs-bootstrap.md
+  s_f1115bf3c6307d::t_746333fc50937a 115-116,118
+packages/stack-python-uv/README.md
+  s_f1115bf3c6307d::t_bf47b75e77c9f0 14
+skills/ai-harness-setup/README.md
+  s_f1115bf3c6307d::t_746333fc50937a 11,22
+packages/stack-javascript-typescript/README.md
+  s_f1115bf3c6307d::t_bf47b75e77c9f0 13
+skills/ai-harness-setup/references/stacks/python/stack.md
+  s_f1115bf3c6307d::t_bf47b75e77c9f0 36
+skills/ai-harness-setup/SKILL.md
+  s_f1115bf3c6307d::t_bf47b75e77c9f0 161,164
+  s_f1115bf3c6307d::t_746333fc50937a 220
+packages/stack-react/README.md
+  s_f1115bf3c6307d::t_bf47b75e77c9f0 19
+README.md
+  s_f1115bf3c6307d::t_bf47b75e77c9f0 105
+  s_f1115bf3c6307d::t_746333fc50937a 142,148,155
+skills/ai-harness-setup/references/stacks/java/framework-spring-boot.md
+  s_f1115bf3c6307d::t_bf47b75e77c9f0 30
+skills/ai-harness-setup/references/stacks/javascript-typescript/stack.md
+  s_f1115bf3c6307d::t_bf47b75e77c9f0 48
+skills/ai-native-assessment/README.md
+  s_f1115bf3c6307d::t_746333fc50937a 11,22
+skills/ai-harness-setup/references/stacks/javascript-typescript/framework-react.md
+  s_f1115bf3c6307d::t_bf47b75e77c9f0 34
+skills/ai-harness-setup/references/opencode.md
+  s_f1115bf3c6307d::t_bf47b75e77c9f0 5,80
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "e232d9d93db65f11fb024a6477e677414737a36b",
+  "prompts": {},
+  "sessions": {
+    "s_f1115bf3c6307d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0e6600aaaffenb94ET53qM2qEi",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Chris Renus <crenus@cisco.com>"
+    }
+  }
+}
