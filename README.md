@@ -102,10 +102,9 @@ apm --version
 Use this install shape:
 
 ```bash
-apm install --target <harness> --allow-protocol-fallback [--trust-transitive-mcp] cisco-open/ai-harness-toolkit/packages/<package>#<package>-v<version>
+apm install --allow-protocol-fallback [--trust-transitive-mcp] cisco-open/ai-harness-toolkit/packages/<package>#<package>-v<version>
 ```
 
-- Always set `--target` so APM writes the right harness config.
 - Use `--trust-transitive-mcp` for packages that include MCP servers directly.
 - Keep `--allow-protocol-fallback` in the command for GitHub transport compatibility.
 
@@ -140,20 +139,20 @@ Available packages:
 
 ## Quick Start
 
-Choose the workflow you want to start with, copy the command you need, and then follow the linked skill documentation for prerequisites, targets, and detailed usage. Use the package install commands above when you want a full stack package instead of a single skill.
+Choose the workflow you want to start with, copy the command you need, and then follow the linked skill documentation for prerequisites and detailed usage. Use the package install commands above when you want a full stack package instead of a single skill.
 
 ### Bootstrap your repository
 
 | Install option | Command |
 | --- | --- |
-| **APM** | `apm install cisco-open/ai-harness-toolkit/skills/ai-harness-setup -t opencode -t cursor -t copilot` |
+| **APM** | `apm install cisco-open/ai-harness-toolkit/skills/ai-harness-setup` |
 | **npx skills** | `npx skills add https://github.com/cisco-open/ai-harness-toolkit --skill ai-harness-setup` |
 
 ### Assess AI-native maturity
 
 | Install option | Command |
 | --- | --- |
-| **APM** | `apm install cisco-open/ai-harness-toolkit/skills/ai-native-assessment -t opencode -t cursor -t copilot` |
+| **APM** | `apm install cisco-open/ai-harness-toolkit/skills/ai-native-assessment` |
 | **npx skills** | `npx skills add https://github.com/cisco-open/ai-harness-toolkit --skill ai-native-assessment` |
 
 ---

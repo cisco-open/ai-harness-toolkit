@@ -8,7 +8,7 @@ You can install this skill with either `apm` or `npx skills`.
 
 ## Option 1: Install With APM
 
-Use this option when you want the skill managed as a dependency and deployed to one or more supported targets.
+Use this option when you want the skill managed as a dependency.
 
 ### Prerequisites
 
@@ -19,13 +19,8 @@ Use this option when you want the skill managed as a dependency and deployed to 
 ### Install The Skill
 
 ```bash
-apm install cisco-open/ai-harness-toolkit/skills/ai-harness-setup -t opencode -t cursor -t copilot -t claude -t windsurf
+apm install cisco-open/ai-harness-toolkit/skills/ai-harness-setup
 ```
-
-Notes:
-
-- Adjust the `-t` targets to match the tools your team uses. Supported targets: `opencode`, `cursor`, `copilot`, `claude`, `windsurf`.
-- For OpenCode only, `-t opencode` is enough.
 
 ### Verify The Install
 

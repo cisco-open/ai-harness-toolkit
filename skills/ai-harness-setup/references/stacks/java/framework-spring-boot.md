@@ -27,7 +27,7 @@ Focus this file on Spring Boot-specific additions instead of shared workflow too
 Install the `stack-spring-boot` package:
 
 ```bash
-apm install --target <ide-1> --target <ide-2> --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-spring-boot#stack-spring-boot-v<latest>
+apm install --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-spring-boot#stack-spring-boot-v<latest>
 ```
 
 This package covers `java-springboot`, `spring-boot-testing`, `java-junit`, and the transitive `core` workflow bundle.

@@ -20,10 +20,10 @@ Use this file when installing package-backed AI tooling with APM.
 1. Audit repo-local skills and existing APM deps before installing anything new.
 2. Choose the matching package from the stack detection results in the main workflow.
 3. Resolve the latest published tag for that package with `git ls-remote --tags https://github.com/cisco-open/ai-harness-toolkit "<name>-v*"` and install the newest matching tag.
-4. Use the detected IDE targets in the install command and include protocol fallback:
+4. Include protocol fallback in the install command:
 
 ```bash
-apm install --target <ide-1> --target <ide-2> --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/<name>#<name>-v<latest>
+apm install --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/<name>#<name>-v<latest>
 ```
 
 5. Do not install `core` separately when a `stack-*` package already pulls it transitively.

@@ -16,5 +16,5 @@ stack-react
 Install with:
 
 ```bash
-apm install --target claude --trust-transitive-mcp --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-react#stack-react-v1.0.4
+apm install --trust-transitive-mcp --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-react#stack-react-v1.0.4
 ```

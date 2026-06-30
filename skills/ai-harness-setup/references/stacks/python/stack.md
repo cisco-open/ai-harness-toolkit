@@ -33,7 +33,7 @@ See `references/stacks/python/deterministic-scans.md` for detailed detection res
 Install the `stack-python-uv` package when the repo is managed with `uv`:
 
 ```bash
-apm install --target <ide-1> --target <ide-2> --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-python-uv#stack-python-uv-v<latest>
+apm install --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-python-uv#stack-python-uv-v<latest>
 ```
 
 This package covers `security-review`, `python-best-practices`, and the transitive `core` workflow bundle. Repo-native tooling still handles linting, type checking, testing, and packaging.

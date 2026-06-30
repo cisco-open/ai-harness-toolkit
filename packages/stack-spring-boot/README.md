@@ -12,5 +12,5 @@ Included dependencies:
 Install with:
 
 ```bash
-apm install --target opencode --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-spring-boot#stack-spring-boot-v1.0.4
+apm install --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-spring-boot#stack-spring-boot-v1.0.4
 ```

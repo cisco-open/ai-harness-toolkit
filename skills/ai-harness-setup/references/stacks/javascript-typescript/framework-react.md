@@ -31,7 +31,7 @@ For Next.js, also install the normal Next runtime and lint setup for that repo.
 Install the `stack-react` package:
 
 ```bash
-apm install --target <ide-1> --target <ide-2> --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-react#stack-react-v<latest>
+apm install --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-react#stack-react-v<latest>
 ```
 
 This package covers React best practices, `javascript-typescript-jest`, `webapp-testing`, `web-design-guidelines`, the transitive `stack-javascript-typescript`, and `core`, plus the Chrome DevTools MCP server.

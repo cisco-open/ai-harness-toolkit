@@ -15,5 +15,5 @@ Included skills:
 Install with:
 
 ```bash
-apm install --target opencode --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/core#core-v1.0.4
+apm install --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/core#core-v1.0.4
 ```

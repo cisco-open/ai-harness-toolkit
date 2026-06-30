@@ -16,5 +16,5 @@ stack-angular
 Install with:
 
 ```bash
-apm install --target claude --trust-transitive-mcp --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-angular#stack-angular-v1.0.4
+apm install --trust-transitive-mcp --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-angular#stack-angular-v1.0.4
 ```

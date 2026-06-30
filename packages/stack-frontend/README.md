@@ -19,5 +19,5 @@ Included dependencies:
 Install with:
 
 ```bash
-apm install --target vscode --trust-transitive-mcp --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-frontend#stack-frontend-v1.0.4
+apm install --trust-transitive-mcp --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-frontend#stack-frontend-v1.0.4
 ```
