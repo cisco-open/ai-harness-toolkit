@@ -1,0 +1,44 @@
+docs/images/readme-banner.svg
+  b150442123641349 1-124
+README.md
+  b150442123641349 1,3,5-7,9,11,13-21,24,26,28-31,33,35,37,39,41,43-47,49,51-65,67-84,86-113,117-121,125-127
+  h_dac50cd51d85a9 22,66,85,128-153
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "14497d7bc4a0460f6bdf2f303ab6783699e994cb",
+  "prompts": {
+    "98576582aef64d0f": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "ce86f6b5-789d-4ab9-9ab4-183a97ad9710",
+        "model": "unknown"
+      },
+      "human_author": "aravindparappil46",
+      "messages": [],
+      "total_additions": 73,
+      "total_deletions": 22,
+      "accepted_lines": 2,
+      "overriden_lines": 11
+    },
+    "b150442123641349": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "726a029b-cf86-4806-a00a-89b4f293ef29",
+        "model": "copilot/claude-opus-4.6"
+      },
+      "human_author": "aravindparappil46",
+      "messages": [],
+      "total_additions": 1332,
+      "total_deletions": 1097,
+      "accepted_lines": 230,
+      "overriden_lines": 2
+    }
+  },
+  "humans": {
+    "h_dac50cd51d85a9": {
+      "author": "Aravind Parappil"
+    }
+  }
+}
