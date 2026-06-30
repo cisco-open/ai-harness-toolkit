@@ -1,0 +1,44 @@
+skills/code-review/stacks/python.md
+  s_f1115bf3c6307d::t_1194d67b6193e0 97
+  s_286290d69e185f::t_bcd8e7fe4bfd09 1-96,98-138
+README.md
+  s_f1115bf3c6307d::t_d9119a68810e24 78-79,82,191-192,195
+skills/code-review/SKILL.md
+  s_286290d69e185f::t_de56f821f1769d 1-187
+skills/code-review/references/fix-loop-protocol.md
+  s_286290d69e185f::t_3a2d64184b53ea 1-96
+skills/code-review/references/review-artifact-format.md
+  s_286290d69e185f::t_cb58887d27f83d 1-93
+skills/code-review/stacks/java.md
+  s_286290d69e185f::t_e54a3da6426a8f 1-128
+skills/code-review/stacks/javascript-typescript.md
+  s_286290d69e185f::t_0ceba5e44c52db 1-157
+skills/commit-and-push-changes/SKILL.md
+  s_286290d69e185f::t_4c25dfb7cb653b 1-98
+skills/pr-follow-up/SKILL.md
+  s_286290d69e185f::t_2e18f8f7f76005 1-197
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "b2a50c69750ae56ec336ab0878083f6e08cd6813",
+  "prompts": {},
+  "sessions": {
+    "s_286290d69e185f": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0e689b4afffesp2mYkruUlEtKh",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Chris Renus <crenus@cisco.com>"
+    },
+    "s_f1115bf3c6307d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0e6600aaaffenb94ET53qM2qEi",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Chris Renus <crenus@cisco.com>"
+    }
+  }
+}
