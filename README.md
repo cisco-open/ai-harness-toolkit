@@ -75,8 +75,11 @@ These supporting skills are bundled so the primary workflows can build on a cons
 
 | Skill | Purpose |
 | --- | --- |
+| [commit-and-push-changes](skills/commit-and-push-changes/SKILL.md) | Commit and push intentional changes while excluding unrelated files |
+| [code-review](skills/code-review/SKILL.md) | Run stack-aware review lanes and synthesize findings for changed code |
 | [create-pull-request-with-reviewers](skills/create-pull-request-with-reviewers/SKILL.md) | Open pull requests with reviewer recommendations based on your repository history |
 | [gh-pr-comment-resolution](skills/gh-pr-comment-resolution/SKILL.md) | Fetch and resolve GitHub pull request review threads |
+| [pr-follow-up](skills/pr-follow-up/SKILL.md) | Monitor PR comments and checks after a pull request is opened |
 | [reflect-on-changes](skills/reflect-on-changes/SKILL.md) | Review recent changes and update related guidance or conventions |
 | [python-best-practices](skills/python-best-practices/SKILL.md) | Improve Python code quality across anti-patterns, testing, error handling, and performance |
 
@@ -185,8 +188,11 @@ ai-harness-toolkit/
 `-- skills/
     |-- ai-harness-setup/
     |-- ai-native-assessment/
+    |-- code-review/
+    |-- commit-and-push-changes/
     |-- create-pull-request-with-reviewers/
     |-- gh-pr-comment-resolution/
+    |-- pr-follow-up/
     |-- reflect-on-changes/
     `-- python-best-practices/
 ```
