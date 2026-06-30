@@ -6,10 +6,7 @@ Use this file when the repo contains `react`, `react-dom`, `next`, `@vitejs/plug
 
 Baseline packages usually include:
 
-- `react`
-- `react-dom`
 - `typescript`
-- `eslint`
 - `typescript-eslint`
 - `eslint-plugin-react`
 - `eslint-plugin-react-hooks`
@@ -27,38 +24,32 @@ For Next.js, also install the normal Next runtime and lint setup for that repo.
 - enable React, hooks, and accessibility lint rules
 - include SonarJS rules for complexity and maintainability
 - add deterministic test, build, and audit commands
-- keep framework-specific runtime config checked in, such as `next.config.*` or `vite.config.*`
+- keep framework-specific runtime configuration checked in, such as `next.config.*` or `vite.config.*`
 
 ## Skills to Install
 
-Prefer these skills when the repo is React-heavy:
-
-- `vercel-react-best-practices`
-- `frontend-testing`
-- `frontend-code-review`
-- `web-design-guidelines`
-- `component-refactoring` when large React components need decomposition
-- `performance-optimization` for runtime bottlenecks
-
-Install the testing companion skills for code-review support:
+Install the `stack-react` package:
 
 ```bash
-apm install github/awesome-copilot/skills/javascript-typescript-jest
-apm install github/awesome-copilot/skills/webapp-testing
+apm install --target <ide-1> --target <ide-2> --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-react#stack-react-v<latest>
 ```
 
+This package covers React best practices, `javascript-typescript-jest`, `webapp-testing`, `web-design-guidelines`, the transitive `stack-javascript-typescript`, and `core`, plus the Chrome DevTools MCP server.
+
 Keep general workflow and security guidance in the shared setup docs; this file should stay focused on React-specific additions.
+
+Treat the package as the default baseline, not the full ceiling. If the repo still has React- or Next-specific gaps after that install, add targeted dynamic skills on top.
 
 ## Install Order
 
 1. audit local skills already vendored in the repo
-2. install `vercel-react-best-practices` from the local repo if available, or use `apm install` from the preferred remote source if not
-3. install frontend review/testing skills with `apm install`
+2. install the `stack-react` package
+3. add only extra dynamic skills when the repo has React-specific gaps the package does not cover
 4. stop once the React-specific gaps are covered, then defer shared workflow installs to the common setup guidance
 
 ## Search Terms
 
-Browse `ai-harness-toolkit` or other curated sources first, then use `npx skills find` with queries such as:
+Browse repo-local or other public curated sources first, then use `npx skills find` with queries such as:
 
 - `react review`
 - `react performance`
@@ -66,7 +57,7 @@ Browse `ai-harness-toolkit` or other curated sources first, then use `npx skills
 - `frontend testing`
 - `accessibility review`
 
-Install any selected package with `apm install <package>`.
+Install any selected extra package with `apm install <pkg>`.
 
 ## Framework Markers
 

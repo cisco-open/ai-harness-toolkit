@@ -149,7 +149,7 @@ Evidence:
 
 - a single command or script bootstraps the entire environment (e.g., `make setup`, `./scripts/bootstrap.sh`)
 - no interactive prompts, manual downloads, or GUI steps required
-- secrets and environment variables have documented placeholder or dev defaults so the agent can proceed without real credentials
+- secrets and environment variables have documented dummy or dev defaults so the agent can proceed without real credentials
 - the bootstrap path is idempotent — running it twice does not break the environment
 
 Failure modes:

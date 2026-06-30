@@ -1,0 +1,16 @@
+name: stack-javascript-typescript
+version: 1.0.4
+description: JavaScript and TypeScript base package for web composition.
+author: Cisco GenAI
+
+dependencies:
+  apm:
+    - git: cisco-open/ai-harness-toolkit
+      path: packages/core
+      ref: core-v1.0.4
+    - gohypergiant/agent-skills/skills/accelint-ts-best-practices
+  mcp: []
+includes: auto
+devDependencies:
+  apm: []
+scripts: {}

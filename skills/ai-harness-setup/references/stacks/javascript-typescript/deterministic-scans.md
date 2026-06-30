@@ -58,6 +58,11 @@ Substitute `{pm}` with the detected package manager (`pnpm`, `npm`, `bun`, or `y
 
 For workspaces using Nx, prefer `{pm} nx affected -t <target>` over direct script calls.
 
+Choose one enforcement mode before wiring these commands:
+
+- `enforced`: use the commands below as blocking checks
+- `advisory`: keep the same commands, but configure them to surface findings without failing
+
 | Check | Nx workspace | Non-Nx |
 |-------|-------------|--------|
 | vulnerability audit | `{pm} audit --audit-level=high` | `{pm} audit --audit-level=high` |
@@ -66,6 +71,45 @@ For workspaces using Nx, prefer `{pm} nx affected -t <target>` over direct scrip
 | type check | `{pm} nx affected -t type-check` | `{pm} exec tsc --noEmit` |
 | tests | `{pm} nx affected -t test` | `{pm} test` or `{pm} run test` |
 | build | `{pm} nx affected -t build` | `{pm} build` or `{pm} run build` |
+
+## Advisory Mode Configuration
+
+In advisory mode, keep the full check surface but make findings non-blocking:
+
+- set harness-added ESLint rules to `warn` severity instead of `error`
+- ensure the primary `lint` entrypoint also stays non-blocking by avoiding remaining error-severity harness rules, or suffix the generated lint command with `|| true` when the repo's tooling cannot express advisory behavior natively
+- suffix Husky or lint-staged lint commands with `|| true`
+- suffix audit commands with `|| true`
+- suffix Semgrep commands with `|| true`
+- apply the same rule to any generated type-check, test, or build command that the harness is newly introducing: if the underlying tool has no native advisory mode, use a consistent non-failing wrapper at the generated entrypoint
+
+Examples:
+
+```json
+{
+  "scripts": {
+    "lint": "eslint . || true",
+    "audit": "pnpm audit --audit-level=high || true",
+    "semgrep": "semgrep scan . || true"
+  }
+}
+```
+
+```js
+export default [
+  {
+    rules: {
+      "sonarjs/cognitive-complexity": ["warn", 15],
+      "no-console": ["warn", { allow: ["warn", "error"] }]
+    }
+  }
+]
+```
+
+```sh
+pnpm lint || true
+pnpm exec tsc --noEmit || true
+```
 
 **Note on `bun`:** `bun` uses `bun run <script>` for package.json scripts and `bunx` instead of `npx`. The audit command may differ -- check `bun` docs for the current equivalent.
 
@@ -76,4 +120,5 @@ For workspaces using Nx, prefer `{pm} nx affected -t <target>` over direct scrip
 - prefer repo-native entrypoints: package.json scripts, Nx targets, or workspace task runner commands
 - use the detected package manager consistently across all commands
 - expose one documented command path for contributors and CI
+- keep the chosen enforcement mode consistent across scripts, hooks, and CI
 - add CI hooks only after the commands pass locally
