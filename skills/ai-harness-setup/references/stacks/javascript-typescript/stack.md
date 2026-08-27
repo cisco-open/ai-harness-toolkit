@@ -45,7 +45,7 @@ Install only the skills that fill real gaps in the repo's current inventory.
 Install the `stack-javascript-typescript` package as the default baseline for plain JavaScript/TypeScript repos:
 
 ```bash
-apm install --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-javascript-typescript#stack-javascript-typescript-v<latest>
+apm install --target <ide-1> --target <ide-2> --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-javascript-typescript#stack-javascript-typescript-v<latest>
 ```
 
 This package provides the shared JavaScript/TypeScript baseline. After that install, add only the extra dynamic skills the repo still needs, such as framework-specific, AI-runtime, or review/testing coverage that is not already bundled.

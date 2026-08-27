@@ -29,6 +29,23 @@ For Gradle-based repos, wire equivalent plugins for compile, test, static analys
 - expose lint, test, and dependency scan through the repo's chosen build tool
 - if SonarQube is used, wire the scanner in CI and keep local static-analysis commands deterministic
 
+For Maven-based repositories, configure OWASP dependency-check to use the cached NVD data feed by default. An NVD API key is optional and must be supplied through the environment rather than committed to the repository:
+
+```xml
+<plugin>
+  <groupId>org.owasp</groupId>
+  <artifactId>dependency-check-maven</artifactId>
+  <configuration>
+    <nvdDatafeedUrl>https://dependency-check.github.io/DependencyCheck_Builder/nvd_cache/</nvdDatafeedUrl>
+    <nvdApiKeyEnvironmentVariable>DEPENDENCY_CHECK_NVD_API_KEY</nvdApiKeyEnvironmentVariable>
+  </configuration>
+</plugin>
+```
+
+Before adding these elements, check the version of `dependency-check-maven` already pinned by the repository. If it does not support `nvdDatafeedUrl` or `nvdApiKeyEnvironmentVariable`, upgrade the plugin to a compatible release. When an upgrade is not possible, use the older plugin's supported `cveUrlBase` and `cveUrlModified` properties with a mirror that publishes the legacy NVD feed format, and verify the update logs show that the configured feed was used.
+
+Treat `DEPENDENCY_CHECK_NVD_API_KEY` as an optional CI or developer environment variable, not a setup prerequisite. Keep the `nvdDatafeedUrl` configuration in both enforced and advisory modes. For Gradle-based repositories, use the OWASP plugin's equivalent data-feed configuration and the same environment-variable policy.
+
 ## Commands
 
 - vulnerability audit: `mvn org.owasp:dependency-check-maven:check` or `./gradlew dependencyCheckAnalyze`
@@ -71,6 +88,8 @@ Example Maven snippet:
   <groupId>org.owasp</groupId>
   <artifactId>dependency-check-maven</artifactId>
   <configuration>
+    <nvdDatafeedUrl>https://dependency-check.github.io/DependencyCheck_Builder/nvd_cache/</nvdDatafeedUrl>
+    <nvdApiKeyEnvironmentVariable>DEPENDENCY_CHECK_NVD_API_KEY</nvdApiKeyEnvironmentVariable>
     <failBuildOnCVSS>11</failBuildOnCVSS>
   </configuration>
 </plugin>

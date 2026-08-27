@@ -2,7 +2,7 @@
 
 Read this file when the repo contains `opencode.jsonc`, `.opencode/`, or the user explicitly wants OpenCode support.
 
-When the repo also supports Cursor, GitHub Copilot, or Claude Code, install reusable skills with `apm install <package>` and keep `.opencode/` focused on OpenCode-specific runtime config, plugins, commands, and `ocx` wiring.
+When the repo also supports Cursor, GitHub Copilot, or Claude Code, install reusable skills with `apm install <package> -t opencode -t cursor -t copilot -t claude` and keep `.opencode/` focused on OpenCode-specific runtime config, plugins, commands, and `ocx` wiring.
 
 ## Files to Manage
 
@@ -77,7 +77,7 @@ If the repo uses `ocx`, ensure:
 ## Verification
 
 - `bun install` succeeds in `.opencode/`
-- install commands avoid hard-coded target flags unless the user explicitly requests a non-default target
+- install commands for OpenCode, Cursor, GitHub Copilot, or Claude Code use the `--target` / `-t` flag (e.g., `-t opencode -t cursor -t copilot -t claude`)
 - `.agents/skills/` contains the shared installed skills when the CLI materializes those selected targets there
 - required plugin packages are present
 - local plugin imports resolve

@@ -158,10 +158,10 @@ Use a package-first install flow. The curated APM packages are the default deliv
 - Audit repo-local skill directories and existing APM dependencies before installing duplicates.
 - Initialize APM first if the repo does not already have `apm.yml`.
 - Resolve the latest published package tag at install time. Use `git ls-remote --tags https://github.com/cisco-open/ai-harness-toolkit "<name>-v*"`, sort the returned tags by semver, and install the newest matching tag. Do not hardcode package versions in this skill.
-- Use protocol fallback in every package install command:
+- Use the detected IDE targets in every package install command and include protocol fallback:
 
 ```bash
-apm install --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/<name>#<name>-v<latest>
+apm install --target <ide-1> --target <ide-2> --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/<name>#<name>-v<latest>
 ```
 
 - Choose the default package from the detection results in step 1:
@@ -193,7 +193,7 @@ Add MCP servers to `apm.yml` based on the detected tech stack. MCP servers give 
 - Treat package-provided MCP servers as already handled by the corresponding package install:
   - `stack-frontend`, `stack-react`, and `stack-angular` provide Chrome DevTools.
 - Treat those package-provided MCP servers as the baseline, not the ceiling. Add extra MCP servers when the detected stack still justifies them.
-- Use `apm mcp search <term>` only for extra servers not covered by a package, such as Postgres, Playwright, Sentry, Kubernetes, Terraform, or a public design-system server. Only add servers that provide clear value for the repo's actual workflow.
+- Use `apm mcp search <term>` only for extra servers not covered by a package, such as Postgres, Playwright, Sentry, Kubernetes, or Terraform. Only add servers that provide clear value for the repo's actual workflow.
 - All MCP servers are declared in the `dependencies.mcp` section of `apm.yml` and installed through `apm install`.
 - Preserve any existing MCP entries in `apm.yml` and carry forward any repo-local MCP config that should remain supported.
 
@@ -217,7 +217,7 @@ Add MCP servers to `apm.yml` based on the detected tech stack. MCP servers give 
 
 - If the repo uses OpenCode, merge config instead of replacing it.
 - Use `references/opencode.md` for the file-level config, plugin, command, and verification details.
-- For repos that also use Cursor or GitHub Copilot, install reusable skills with `apm install <package>` and let the CLI materialize the repo-local layout.
+- For repos that also use Cursor or GitHub Copilot, install reusable skills with `apm install <package> -t opencode -t cursor -t copilot` and let the CLI materialize the repo-local layout.
 - Ensure the repo's OpenCode layer includes the required plugin packages and permission rules.
 - Add MCP server entries only when they match the detected stack. See `references/mcp-servers.md` for the baseline and discovery workflow, and `references/opencode.md` for OpenCode-specific MCP config.
 

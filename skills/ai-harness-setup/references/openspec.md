@@ -24,7 +24,7 @@ openspec --version
 If that fails, install the CLI globally before doing anything else:
 
 ```bash
-npm install -g openspec
+npm install -g @fission-ai/openspec
 ```
 
 OpenSpec is installed globally because it is a cross-repo workflow tool that should work regardless of the repo's language or package manager. A Python-only repo with no `package.json` still needs access to `openspec`.
