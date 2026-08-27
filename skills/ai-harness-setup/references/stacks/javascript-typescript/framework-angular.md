@@ -26,7 +26,7 @@ Focus this file on Angular-specific additions instead of shared workflow tooling
 Install the `stack-angular` package as the primary Angular companion:
 
 ```bash
-apm install --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-angular#stack-angular-v<latest>
+apm install --target <ide-1> --target <ide-2> --allow-protocol-fallback cisco-open/ai-harness-toolkit/packages/stack-angular#stack-angular-v<latest>
 ```
 
 This package covers `angular-developer`, `web-design-guidelines`, the transitive `stack-javascript-typescript`, and `core`, plus the Chrome DevTools MCP server.

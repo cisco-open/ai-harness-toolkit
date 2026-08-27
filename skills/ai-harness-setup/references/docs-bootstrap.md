@@ -112,10 +112,10 @@ Avoid vague filler like "run the app" or "follow team conventions" when the repo
 
 When the repo uses APM, create this doc to serve as the durable reference for how APM-managed dependencies interact with the repository. It should contain:
 
-1. **Installed skills** -- list every skill installed via `apm install`. Show the actual `apm install` commands used.
-2. **Where APM materializes content** -- document the directories APM writes to, such as `.github/skills/`, `.github/prompts/`, `.github/instructions/`, and `.claude/skills/`.
+1. **Installed skills and their targets** -- list every skill installed via `apm install`, including which targets were used (e.g., `-t opencode -t cursor -t copilot -t claude`). Show the actual `apm install` commands used.
+2. **Where APM materializes content** -- document the directories APM writes to for each target (e.g., `.github/skills/`, `.github/prompts/`, `.github/instructions/`, `.claude/skills/`).
 3. **What to commit** -- explain that all deployed files in `.github/` and `.claude/` should be committed so every contributor gets agent context without running `apm install`. Only `apm_modules/` is gitignored.
-4. **How to add a new skill** -- the `apm install` command pattern, then stage and commit the deployed files alongside `apm.yml` and `apm.lock.yaml`.
+4. **How to add a new skill** -- the `apm install` command pattern with targets, then stage and commit the deployed files alongside `apm.yml` and `apm.lock.yaml`.
 5. **How to sync after pulling** -- `apm install` to regenerate managed content from `apm.yml` and `apm.lock.yaml`, then verify no drift with a conditional status check that only includes `.claude/` when present, for example:
 
    ```bash
